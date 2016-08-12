@@ -5,6 +5,7 @@ __pycache__/
 
 # Django staticfile
 hatparty/staticfiles/
+db.sqlite3
 
 # C extensions
 *.so

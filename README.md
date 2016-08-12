@@ -14,3 +14,9 @@ The sickest party.
     - Chug
 - No auth, just unique key on name/email
 - Potentially 
+
+## To run
+1. Setup virtualenv for pip/python (2.7)
+2. `$ cd ~/HatParty`
+3. `$ python manage.py runserver`
+4. Visit [127.0.0.1:8000](http://127.0.0.1:8000) in your browser
