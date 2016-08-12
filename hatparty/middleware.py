@@ -5,7 +5,9 @@ def user_middleware(get_response):
     # One-time configuration and initialization.
 
     def middleware(request):
-        request.hat_user = HatUser.objects.all()[0]
+        users = HatUser.objects.all()
+        if users:
+            request.hat_user = users[0]
         response = get_response(request)
         return response
 
