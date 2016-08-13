@@ -24,8 +24,8 @@
 
     <hr/>
 
-    <div class="hats-container row">
     <h2>Hats</h2>
+    <div class="hats-container row">
     {% for hat in hats %}
     <div id="hat-container-{{hat.id}}" class="col-xs-12">
       <h4>{{ hat.name }} {% if hat.current_wearer %}<small>(worn by {{hat.current_wearer.name}})</small>{% endif %}</h4>
@@ -46,10 +46,10 @@
 
     <hr/>
 
-    <div class="users-container row">
     <h2>People</h2>
+    <div class="users-container row">
     {% for user in users %}
-    <div id="user-container-{{user.id}}" class="col-xs-6">
+    <div id="user-container-{{user.id}}" class="col-xs-6" style="margin-bottom:1.2em;">
       {% if user.email %}
       <h4><a href="mailto:{{user.email}}">{{ user.name }}</a></h4>
       {% else %}
@@ -57,7 +57,7 @@
       {% endif %}
       <a href="javascript:slapUser('{{user.id}}');">Slap (<span class="slap-counter" data-user-id="{{user.id}}">{{user.current_slaps.count}}</span>)</a>
     </div>
-    <br/><br/>
+    <!-- <br/><br/> -->
     {% endfor %}
     </div>
 

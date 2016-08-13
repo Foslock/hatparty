@@ -66,12 +66,19 @@ function incrementCounter() {
     });
 }
 
-function _refreshData() {
-    window.location.href = "/";
+function _refreshData(q) {
+    if (!q) { q = ""; }
+    window.location.href = "/" + q;
 }
 
 
 $(document).ready(
 function(){
     console.log("It's hat time.");
+    var query = window.location.search;
+    if (query && query.indexOf("refresh")) {
+        setTimeout(function() {
+            _refreshData("?refresh");
+        }, 5000);
+    }
 });
