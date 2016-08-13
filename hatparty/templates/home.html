@@ -27,7 +27,7 @@
     <h2>Hats</h2>
     <div class="hats-container row">
     {% for hat in hats %}
-    <div id="hat-container-{{hat.id}}" class="col-xs-12">
+    <div id="hat-container-{{hat.id}}" class="col-xs-6" style="margin-bottom:1.2em;">
       <h4>{{ hat.name }} {% if hat.current_wearer %}<small>(worn by {{hat.current_wearer.name}})</small>{% endif %}</h4>
       <p>{{ hat.description }}</p>
       {% if hat.current_wearer %}
@@ -43,7 +43,6 @@
       <p><a href="javascript:claimHat('{{hat.id}}');">Wear this Hat</a></p>
       {% endif %}
     </div>
-    <br/>
     {% endfor %}
     </div>
 
