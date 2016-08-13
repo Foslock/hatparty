@@ -43,7 +43,8 @@ class Slap(models.Model):
 
 class HatTransfer(models.Model):
     create_date = models.DateTimeField(default=timezone.now)
-    source_user = models.ForeignKey(HatUser, related_name='transfers_from')
+    source_user = models.ForeignKey(
+        HatUser, related_name='transfers_from', blank=True, null=True)
     target_user = models.ForeignKey(
         HatUser, related_name='transfers_to', blank=True, null=True)
     hat = models.ForeignKey(Hat, related_name='transfers')

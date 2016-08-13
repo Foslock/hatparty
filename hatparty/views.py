@@ -28,11 +28,13 @@ class HomePage(View):
     def get(self, request):
         hats = Hat.objects.all()
         users = HatUser.objects.all()
+        hat_transfers = HatTransfer.objects.order_by("-create_date")[:50]
         dct = {
             'hats': hats,
             'users': users,
             'total_counter': sum(u.counter_value for u in users),
             'hat_user': request.hat_user,
+            'hat_transfers': hat_transfers,
         }
         return render(request, 'home.html', dct)
 
@@ -46,8 +48,12 @@ class HatUserCreate(View):
     def post(self, request):
         name = request.POST.get('name')
         email = request.POST.get('email')
-        user = HatUser()
-        user.name = name
+        matching_user = HatUser.objects.filter(name=name).first()
+        if matching_user:
+            user = matching_user
+        else:
+            user = HatUser()
+            user.name = name
         if email:
             user.email = email
         user.save()
@@ -71,12 +77,12 @@ class ClaimHatRoute(APIView):
     def post(self, request, hat_id=None):
         hat = Hat.objects.get(id=hat_id)
         if hat:
+            transfer = HatTransfer()
             if hat.current_wearer:
-                transfer = HatTransfer()
                 transfer.source_user = hat.current_wearer
-                transfer.target_user = request.hat_user
-                transfer.hat = hat
-                transfer.save()
+            transfer.target_user = request.hat_user
+            transfer.hat = hat
+            transfer.save()
             request.hat_user.current_hat = hat
             request.hat_user.save()
         return Response()
@@ -88,12 +94,11 @@ class DitchHatRoute(APIView):
     def post(self, request, hat_id=None):
         hat = Hat.objects.get(id=hat_id)
         if hat and hat.current_wearer:
-            if request.hat_user.id == hat.current_wearer.id:
-                transfer = HatTransfer()
-                transfer.source_user = request.hat_user
-                transfer.target_user = None
-                transfer.hat = hat
-                transfer.save()
+            transfer = HatTransfer()
+            transfer.source_user = request.hat_user
+            transfer.target_user = None
+            transfer.hat = hat
+            transfer.save()
             request.hat_user.current_hat = None
             request.hat_user.save()
         return Response()

@@ -15,36 +15,38 @@
 
 <body>
 
-  <div class="container">
+  <div class="container" style="padding:2em;">
 
     <div class="hat-header">
       <h1>This is a Hat Party. Welcome {{ hat_user.name }}.</h1>
-      <p class="lead">Something is going on. <a href="javascript:incrementCounter();">{{ total_counter }} is a great number...</a></p>
+      <p class="lead">Enjoy a drink. Wear a hat. Slap somebody. <a href="javascript:incrementCounter();">Make this number go up: {{ total_counter }}</a></p>
     </div>
+
+    <hr/>
 
     <div class="hats-container row">
     <h2>Hats</h2>
     {% for hat in hats %}
-    <div id="hat-container-{{hat.id}}" class="col-md-6">
-      <h4>{{ hat.name }}</h4>
+    <div id="hat-container-{{hat.id}}" class="col-xs-12">
+      <h4>{{ hat.name }} {% if hat.current_wearer %}<small>(worn by {{hat.current_wearer.name}})</small>{% endif %}</h4>
       <p>{{ hat.description }}</p>
       {% if hat.current_wearer %}
-      <p>Worn by <a href="#">{{ hat.current_wearer.name }}.</a></p>
-      <a href="javascript:likeHat('{{hat.id}}');">Like (<span data-hat-id="{{hat.id}}">{{hat.current_likes.count}}</span>)</a> |
-      <a href="javascript:slapUser('{{hat.current_wearer.id}}');">Slap (<span class="slap-counter" data-user-id="{{hat.current_wearer.id}}">{{hat.current_wearer.current_slaps.count}}</span>)</a>
-      {% if hat.current_wearer.id != hat_user.id %}
-       | <a href="#">Steal (<span data-hat-id="{{hat.id}}">{{hat.transfers.count}}</span>)</a>
-      {% endif %}
-      <br/>
-      <a href="javascript:ditchHat('{{hat.id}}');">Take off this Hat</a>
+          {% if hat.current_wearer.id != hat_user.id %}
+            <a href="javascript:likeHat('{{hat.id}}');">Like (<span data-hat-id="{{hat.id}}">{{hat.current_likes.count}}</span>)</a> |
+            <a href="javascript:slapUser('{{hat.current_wearer.id}}');">Slap (<span class="slap-counter" data-user-id="{{hat.current_wearer.id}}">{{hat.current_wearer.current_slaps.count}}</span>)</a>
+           | <a href="#">Steal (<span data-hat-id="{{hat.id}}">{{hat.transfers.count}}</span>)</a>
+          {% endif %}
+        <p><a href="javascript:ditchHat('{{hat.id}}');">Take off this Hat</a></p>
       {% else %}
-      <a href="javascript:claimHat('{{hat.id}}');">Wear this Hat</a>
+      <p><a href="javascript:claimHat('{{hat.id}}');">Wear this Hat</a></p>
       {% endif %}
     </div>
+    <br/>
     {% endfor %}
     </div>
 
-    <br/>
+    <hr/>
+
     <div class="users-container row">
     <h2>People</h2>
     {% for user in users %}
@@ -55,6 +57,23 @@
     <br/>
     {% endfor %}
     </div>
+
+    <hr/>
+
+    <div class="users-container row">
+    <h2>Hat History</h2>
+    <p><a href="/">See updates!</a></p>
+    {% for transfer in hat_transfers %}
+      {% if transfer.target_user and transfer.source_user %}
+      <p>{{transfer.target_user.name}} stole the {{transfer.hat.name}} from {{transfer.source_user.name}}</p>
+      {% elif transfer.target_user %}
+      <p>{{transfer.target_user.name}} put on {{transfer.hat.name}}.</p>
+      {% elif transfer.source_user %}
+      <p>{{transfer.source_user.name}} took off {{transfer.hat.name}}.</p>
+      {% endif %}
+    {% endfor %}
+    </div>
+
 
   </div>
 
