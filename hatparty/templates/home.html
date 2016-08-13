@@ -34,7 +34,6 @@
           {% if hat.current_wearer.id != hat_user.id %}
             <a href="javascript:likeHat('{{hat.id}}');">Like (<span data-hat-id="{{hat.id}}">{{hat.current_likes.count}}</span>)</a> |
             <a href="javascript:slapUser('{{hat.current_wearer.id}}');">Slap (<span class="slap-counter" data-user-id="{{hat.current_wearer.id}}">{{hat.current_wearer.current_slaps.count}}</span>)</a>
-           | <a href="#">Steal (<span data-hat-id="{{hat.id}}">{{hat.transfers.count}}</span>)</a>
           {% endif %}
         <p><a href="javascript:ditchHat('{{hat.id}}');">Take off this Hat</a></p>
       {% else %}
@@ -50,11 +49,15 @@
     <div class="users-container row">
     <h2>People</h2>
     {% for user in users %}
-    <div id="user-container-{{user.id}}" class="col-xs-12">
+    <div id="user-container-{{user.id}}" class="col-xs-6">
+      {% if user.email %}
       <h4><a href="mailto:{{user.email}}">{{ user.name }}</a></h4>
+      {% else %}
+      <h4>{{ user.name }}</h4>
+      {% endif %}
       <a href="javascript:slapUser('{{user.id}}');">Slap (<span class="slap-counter" data-user-id="{{user.id}}">{{user.current_slaps.count}}</span>)</a>
     </div>
-    <br/>
+    <br/><br/>
     {% endfor %}
     </div>
 
