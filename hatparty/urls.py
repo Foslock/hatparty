@@ -19,15 +19,23 @@ from django.contrib import admin
 from .views import (
     HomePage,
     RefreshDataRoute,
+    IncrementCounter,
     CreateSlap,
+    HatUserCreate,
+    ClaimHatRoute,
+    DitchHatRoute,
+    LikeHatRoute,
 )
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^login/', HatUserCreate.as_view()),
     url(r'^hatdata/$', RefreshDataRoute.as_view()),
-    url(r'^wearhat/(?P<hat_id>[0-9]+)$', RefreshDataRoute.as_view()),
-    url(r'^ditchhat/(?P<hat_id>[0-9]+)$', RefreshDataRoute.as_view()),
+    url(r'^increment/$', IncrementCounter.as_view()),
+    url(r'^wearhat/(?P<hat_id>[0-9]+)$', ClaimHatRoute.as_view()),
+    url(r'^ditchhat/(?P<hat_id>[0-9]+)$', DitchHatRoute.as_view()),
     url(r'^slapuser/(?P<user_id>[0-9]+)$', CreateSlap.as_view()),
-    url(r'^likehat/(?P<hat_id>[0-9]+)$', RefreshDataRoute.as_view()),
+    url(r'^likehat/(?P<hat_id>[0-9]+)$', LikeHatRoute.as_view()),
     url(r'^$', HomePage.as_view()),
 ]

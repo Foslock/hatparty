@@ -2,11 +2,20 @@ from django.db import models
 from django.utils import timezone
 from rest_framework import serializers
 
+import uuid
+
 
 class Hat(models.Model):
     name = models.CharField(max_length=255)
     image_file = models.FilePathField(blank=True, null=True)
     description = models.TextField()
+
+    @property
+    def current_wearer(self):
+        try:
+            return self._current_wearer
+        except Exception:
+            return None
 
 
 class HatUser(models.Model):
@@ -14,8 +23,9 @@ class HatUser(models.Model):
     name = models.CharField(max_length=255)
     counter_value = models.IntegerField(default=0)
     create_date = models.DateTimeField(default=timezone.now)
+    auth_token = models.UUIDField(default=uuid.uuid4, editable=False)
     current_hat = models.OneToOneField(
-        Hat, related_name='current_wearer', blank=True, null=True)
+        Hat, related_name='_current_wearer', blank=True, null=True)
 
 
 class Like(models.Model):

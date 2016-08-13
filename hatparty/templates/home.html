@@ -15,23 +15,11 @@
 
 <body>
 
-  <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-    <a class="navbar-brand" href="#">Hat Party</a>
-    <ul class="nav navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">See the Hats! <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">WTF?</a>
-      </li>
-    </ul>
-  </nav>
-
   <div class="container">
 
     <div class="hat-header">
-      <h1>This is a Hat Party.</h1>
-      <p class="lead">Something is going on... {{ total_counter }}</p>
+      <h1>This is a Hat Party. Welcome {{ hat_user.name }}.</h1>
+      <p class="lead">Something is going on. <a href="javascript:incrementCounter();">{{ total_counter }} is a great number...</a></p>
     </div>
 
     <div class="hats-container row">
@@ -41,13 +29,16 @@
       <h4>{{ hat.name }}</h4>
       <p>{{ hat.description }}</p>
       {% if hat.current_wearer %}
-      <p>Worn by <a href="#">{{ hat.current_wearer.name }}</a></p>
+      <p>Worn by <a href="#">{{ hat.current_wearer.name }}.</a></p>
       <a href="javascript:likeHat('{{hat.id}}');">Like (<span data-hat-id="{{hat.id}}">{{hat.current_likes.count}}</span>)</a> |
-      <a href="javascript:slapUser('{{hat.current_wearer.id}}');">Slap (<span class="slap-counter" data-user-id="{{hat.current_wearer.id}}">{{hat.current_wearer.current_slaps.count}}</span>)</a> |
-      <a href="#">Steal (<span data-hat-id="{{hat.id}}">{{hat.transfers.count}}</span>)</a>
-      <a href="javascript:ditchHat('{{hat.id}}');">Take off this Hat.</a>
+      <a href="javascript:slapUser('{{hat.current_wearer.id}}');">Slap (<span class="slap-counter" data-user-id="{{hat.current_wearer.id}}">{{hat.current_wearer.current_slaps.count}}</span>)</a>
+      {% if hat.current_wearer.id != hat_user.id %}
+       | <a href="#">Steal (<span data-hat-id="{{hat.id}}">{{hat.transfers.count}}</span>)</a>
+      {% endif %}
+      <br/>
+      <a href="javascript:ditchHat('{{hat.id}}');">Take off this Hat</a>
       {% else %}
-      <a href="javascript:claimHat('{{hat.id}}');">Wear this Hat.</a>
+      <a href="javascript:claimHat('{{hat.id}}');">Wear this Hat</a>
       {% endif %}
     </div>
     {% endfor %}
@@ -57,10 +48,11 @@
     <div class="users-container row">
     <h2>People</h2>
     {% for user in users %}
-    <div id="user-container-{{user.id}}" class="col-md-6">
+    <div id="user-container-{{user.id}}" class="col-xs-12">
       <h4><a href="mailto:{{user.email}}">{{ user.name }}</a></h4>
       <a href="javascript:slapUser('{{user.id}}');">Slap (<span class="slap-counter" data-user-id="{{user.id}}">{{user.current_slaps.count}}</span>)</a>
     </div>
+    <br/>
     {% endfor %}
     </div>
 

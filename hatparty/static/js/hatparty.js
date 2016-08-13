@@ -31,7 +31,6 @@ $.ajaxSetup({
 function claimHat(hat_id) {
     if (hat_id) {
         $.post("/wearhat/" + hat_id).done(function(data) {
-            console.log(data);
             _refreshData();
         });
     }
@@ -40,7 +39,6 @@ function claimHat(hat_id) {
 function ditchHat(hat_id) {
     if (hat_id) {
         $.post("/ditchhat/" + hat_id).done(function(data) {
-            console.log(data);
             _refreshData();
         });
     }
@@ -49,7 +47,6 @@ function ditchHat(hat_id) {
 function likeHat(hat_id) {
     if (hat_id) {
         $.post("/likehat/" + hat_id).done(function(data) {
-            console.log(data);
             _refreshData();
         });
     }
@@ -58,26 +55,23 @@ function likeHat(hat_id) {
 function slapUser(user_id) {
     if (user_id) {
         $.post("/slapuser/" + user_id).done(function(data) {
-            console.log(data);
             _refreshData();
         });
     }
 }
 
-function _refreshData() {
-    $.get("/hatdata").done(function(data) {
-        var slaps = data['slaps'];
-        console.log(data);
+function incrementCounter() {
+    $.post("/increment/").done(function(data) {
+        _refreshData();
     });
+}
+
+function _refreshData() {
+    window.location.href = "/";
 }
 
 
 $(document).ready(
 function(){
-
-    CURRENT_USER = "me";
-
     console.log("It's hat time.");
-
-    _refreshData();
 });
