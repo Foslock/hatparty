@@ -63,17 +63,21 @@
 
     <hr/>
 
-    <div class="users-container row">
     <h2>Hat History</h2>
-    <p><a href="/">See updates!</a></p>
+    <div class="history-container row">
+    <div class="col-xs-12">
+      <p><a href="/">See updates!</a></p>
+    </div>
     {% for transfer in hat_transfers %}
-      {% if transfer.target_user and transfer.source_user %}
-      <p>{{transfer.target_user.name}} stole the {{transfer.hat.name}} from {{transfer.source_user.name}}</p>
-      {% elif transfer.target_user %}
-      <p>{{transfer.target_user.name}} put on {{transfer.hat.name}}.</p>
-      {% elif transfer.source_user %}
-      <p>{{transfer.source_user.name}} took off {{transfer.hat.name}}.</p>
-      {% endif %}
+      <div class="col-xs-12">
+        {% if transfer.target_user and transfer.source_user %}
+        <p>{{transfer.target_user.name}} stole the {{transfer.hat.name}} from {{transfer.source_user.name}}</p>
+        {% elif transfer.target_user %}
+        <p>{{transfer.target_user.name}} put on {{transfer.hat.name}}.</p>
+        {% elif transfer.source_user %}
+        <p>{{transfer.source_user.name}} took off {{transfer.hat.name}}.</p>
+        {% endif %}
+      </div>
     {% endfor %}
     </div>
 
