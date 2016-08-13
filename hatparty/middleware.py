@@ -1,4 +1,5 @@
 from .models import HatUser
+from django.conf import settings
 from django.http import HttpResponseRedirect
 
 LOGIN_PATH = "/login/"
@@ -18,7 +19,7 @@ def user_middleware(get_response):
                     response = get_response(request)
                     return response
 
-            if request.path != LOGIN_PATH:
+            if request.path != LOGIN_PATH and settings.PARTY_IS_HAPPENING:
                 return HttpResponseRedirect(LOGIN_PATH)
             else:
                 return get_response(request)

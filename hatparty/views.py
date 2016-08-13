@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.conf import settings
 from django.http import (
     HttpResponse,
     JsonResponse,
@@ -29,14 +30,21 @@ class HomePage(View):
         hats = Hat.objects.all()
         users = HatUser.objects.all()
         hat_transfers = HatTransfer.objects.order_by("-create_date")[:50]
-        dct = {
-            'hats': hats,
-            'users': users,
-            'total_counter': sum(u.counter_value for u in users),
-            'hat_user': request.hat_user,
-            'hat_transfers': hat_transfers,
-        }
-        return render(request, 'home.html', dct)
+        if settings.PARTY_IS_HAPPENING:
+            dct = {
+                'hats': hats,
+                'users': users,
+                'total_counter': sum(u.counter_value for u in users),
+                'hat_transfers': hat_transfers,
+            }
+            return render(request, 'home.html', dct)
+        else:
+            dct = {
+                'slap_count': Slap.objects.count(),
+                'like_count': Like.objects.count(),
+                'transfer_count': HatTransfer.objects.count(),
+            }
+            return render(request, 'after.html', dct)
 
 
 class HatUserCreate(View):

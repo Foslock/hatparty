@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Flag to turn off party
+PARTY_IS_HAPPENING = False
+
 
 # Application definition
 
