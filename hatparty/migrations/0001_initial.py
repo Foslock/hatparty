@@ -17,6 +17,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Hat',
             fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255, primary_key=True, serialize=False)),
                 ('image_file', models.FilePathField()),
                 ('description', models.TextField()),
@@ -32,6 +33,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='HatUser',
             fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('email', models.EmailField(max_length=255, primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=255)),
                 ('create_date', models.DateTimeField()),

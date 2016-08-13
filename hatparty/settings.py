@@ -77,9 +77,16 @@ WSGI_APPLICATION = 'hatparty.wsgi.application'
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'local': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dd5usj78ia48bt',
+        'USER': 'mxtlfwnjlttnwg',
+        'PASSWORD': 'ashQnM0nUUv8XfZgMaKw1iOvWG',
+        'HOST': 'ec2-54-243-201-107.compute-1.amazonaws.com',
     }
 }
 
