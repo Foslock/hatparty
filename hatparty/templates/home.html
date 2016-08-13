@@ -32,10 +32,13 @@
       <p>{{ hat.description }}</p>
       {% if hat.current_wearer %}
           {% if hat.current_wearer.id != hat_user.id %}
+          <p>
             <a href="javascript:likeHat('{{hat.id}}');">Like (<span data-hat-id="{{hat.id}}">{{hat.current_likes.count}}</span>)</a> |
             <a href="javascript:slapUser('{{hat.current_wearer.id}}');">Slap (<span class="slap-counter" data-user-id="{{hat.current_wearer.id}}">{{hat.current_wearer.current_slaps.count}}</span>)</a>
+          </p>
+          {% else %}
+            <p><a href="javascript:ditchHat('{{hat.id}}');">Take off this Hat</a></p>
           {% endif %}
-        <p><a href="javascript:ditchHat('{{hat.id}}');">Take off this Hat</a></p>
       {% else %}
       <p><a href="javascript:claimHat('{{hat.id}}');">Wear this Hat</a></p>
       {% endif %}
